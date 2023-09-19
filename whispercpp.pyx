@@ -86,6 +86,7 @@ cdef class Whisper:
     def __init__(self, model=DEFAULT_MODEL, pb=None, buf=None):
 
         if not os.path.exists(model):
+            print('No valid path given')
             model_fullname = f'ggml-{model}.bin'
             download_model(model_fullname)
             model_path = Path(MODELS_DIR).joinpath(model_fullname)

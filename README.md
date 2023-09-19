@@ -1,7 +1,7 @@
 Python bindings for whisper.cpp
 ===============================
 
-- Run `pip install git+https://github.com/YannisTevissen/whisper-ggml-python`
+- Run `pip install -e git+https://github.com/YannisTevissen/whisper-ggml-python`
 - set `WHISPER_MODELS`as the directory where the models will be stored
 
 ```python
