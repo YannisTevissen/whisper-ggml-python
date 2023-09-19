@@ -7,7 +7,7 @@ import requests
 import os
 from pathlib import Path
 
-MODELS_DIR = str(Path('~/.ggml-models').expanduser())
+MODELS_DIR = os.environ['WHISPER_MODELS']
 print("Saving models to:", MODELS_DIR)
 
 
@@ -84,10 +84,13 @@ cdef class Whisper:
     cdef whisper_full_params params
 
     def __init__(self, model=DEFAULT_MODEL, pb=None, buf=None):
-        
-        model_fullname = f'ggml-{model}.bin'
-        download_model(model_fullname)
-        model_path = Path(MODELS_DIR).joinpath(model_fullname)
+
+        if not os.path.exists(model):
+            model_fullname = f'ggml-{model}.bin'
+            download_model(model_fullname)
+            model_path = Path(MODELS_DIR).joinpath(model_fullname)
+        else:
+            model_path = model
         cdef bytes model_b = str(model_path).encode('utf8')
         
         if buf is not None:
