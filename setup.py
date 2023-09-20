@@ -36,6 +36,5 @@ setup(
       'numpy',
       'ffmpeg-python',
       'requests',
-      'subprocess',
     ],
 )
