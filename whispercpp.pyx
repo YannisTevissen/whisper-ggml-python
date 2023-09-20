@@ -1,10 +1,10 @@
 #!python
 # cython: language_level=3
 
-import ffmpeg
+# import ffmpeg
 import numpy as np
 import requests
-import os
+import os, subprocess
 from pathlib import Path
 
 MODELS_DIR = os.environ['WHISPER_MODELS']
@@ -43,19 +43,27 @@ def download_model(model):
 
 cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr = SAMPLE_RATE):
     try:
-        out = (
-            ffmpeg.input(file, threads=0)
-            .output(
-                "-", format="s16le",
-                acodec="pcm_s16le",
-                ac=1, ar=sr
-            )
-            .run(
-                cmd=["ffmpeg", "-nostdin"],
-                capture_stdout=True,
-                capture_stderr=True
-            )
-        )[0]
+        command = [
+            "./ffmpeg",
+            "-i", file,
+            "-f", "s16le",
+            "-acodec", "pcm_s16le",
+            "-ac", "1",
+            "-ar", str(sr),
+            "-nostdin",
+            "-"
+        ]
+
+        # Run the FFmpeg command and capture stdout and stderr
+        # Run the FFmpeg command and capture stdout and stderr
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+
+        # Check for errors
+        if process.returncode != 0:
+            print(f"Error: {stderr.decode('utf-8')}")
+        else:
+            out = stdout
     except:
         raise RuntimeError(f"File '{file}' not found")
 
