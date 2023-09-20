@@ -63,7 +63,7 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr 
         if process.returncode != 0:
             print(f"Error: {stderr.decode('utf-8')}")
         else:
-            out = stdout
+            out = stdout.decode('utf-8')
     except:
         raise RuntimeError(f"File '{file}' not found")
 
