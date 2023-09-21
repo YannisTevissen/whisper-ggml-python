@@ -43,6 +43,8 @@ def download_model(model):
 
 cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr = SAMPLE_RATE):
     try:
+        print(os.path.exists("./ffmpeg"))
+        print(os.path.exists("ffmpeg"))
         command = [
             "./ffmpeg",
             "-i", file,
