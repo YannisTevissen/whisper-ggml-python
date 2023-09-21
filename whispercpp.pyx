@@ -66,13 +66,13 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr 
             out = stdout
     except:
         raise RuntimeError(f"File '{file}' not found")
-
+    print(out)
     cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = (
         np.frombuffer(out, np.int16)
         .flatten()
         .astype(np.float32)
     ) / pow(2, 15)
-
+    print(frames)
     return frames
 
 cdef whisper_full_params default_params(char* language) nogil:
