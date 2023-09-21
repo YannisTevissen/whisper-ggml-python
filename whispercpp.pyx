@@ -41,10 +41,11 @@ def download_model(model):
         f.write(r.content)
 
 
-cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr = SAMPLE_RATE):
+cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(str file, int sr = SAMPLE_RATE):
     try:
         print(os.path.exists("./ffmpeg"))
         print(os.path.exists("ffmpeg"))
+        print(os.path.exists(file))
         command = [
             "./ffmpeg",
             "-y",
@@ -123,7 +124,7 @@ cdef class Whisper:
             temp = filename
         
         elif (type(filename) == str) :
-            temp = load_audio(<bytes>filename)
+            temp = load_audio(filename)
         else :
             temp = load_audio(<bytes>TEST_FILE)
 
