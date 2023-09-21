@@ -47,6 +47,8 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr 
         print(os.path.exists("ffmpeg"))
         command = [
             "./ffmpeg",
+            "-y",
+            "-loglevel", "debug",
             "-i", file,
             "-f", "s16le",
             "-acodec", "pcm_s16le",
@@ -60,7 +62,7 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr 
         # Run the FFmpeg command and capture stdout and stderr
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
-
+        print(stderr.decode('utf-8'))
         # Check for errors
         if process.returncode != 0:
             print(f"Error: {stderr.decode('utf-8')}")
