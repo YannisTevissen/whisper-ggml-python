@@ -126,7 +126,7 @@ cdef class Whisper:
         elif (type(filename) == str) :
             temp = load_audio(filename)
         else :
-            temp = load_audio(<bytes>TEST_FILE)
+            temp = load_audio(TEST_FILE)
 
         
         cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = temp
