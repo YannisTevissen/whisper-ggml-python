@@ -14,7 +14,7 @@ print("Saving models to:", MODELS_DIR)
 cimport numpy as cnp
 
 cdef int SAMPLE_RATE = 16000
-cdef str TEST_FILE = 'test.wav'
+cdef char* TEST_FILE = 'test.wav'
 cdef char* DEFAULT_MODEL = 'tiny'
 cdef int N_THREADS = os.cpu_count()
 
@@ -124,9 +124,9 @@ cdef class Whisper:
             temp = filename
         
         elif (type(filename) == str) :
-            temp = load_audio(filename)
+            temp = load_audio(<str>filename)
         else :
-            temp = load_audio(TEST_FILE)
+            temp = load_audio(<str>TEST_FILE)
 
         
         cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = temp
