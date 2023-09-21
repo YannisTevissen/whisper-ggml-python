@@ -14,7 +14,7 @@ print("Saving models to:", MODELS_DIR)
 cimport numpy as cnp
 
 cdef int SAMPLE_RATE = 16000
-cdef char* TEST_FILE = 'test.wav'
+cdef str TEST_FILE = 'test.wav'
 cdef char* DEFAULT_MODEL = 'tiny'
 cdef int N_THREADS = os.cpu_count()
 
