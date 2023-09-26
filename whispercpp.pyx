@@ -43,9 +43,9 @@ def download_model(model):
 
 cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(str file, int sr = SAMPLE_RATE):
     try:
-        print(os.path.exists("./ffmpeg"))
-        print(os.path.exists("ffmpeg"))
-        print(os.path.exists("/tmp/0.wav"))
+        #print(os.path.exists("./ffmpeg"))
+        #print(os.path.exists("ffmpeg"))
+        #print(os.path.exists("/tmp/0.wav"))
         command = [
             "./ffmpeg",
             "-y",
@@ -63,14 +63,14 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(str file, int sr = 
         # Run the FFmpeg command and capture stdout and stderr
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
-        print(stderr.decode('utf-8'))
+        # print(stderr.decode('utf-8'))
         # Check for errors
         if process.returncode != 0:
             print(f"Error: {stderr.decode('utf-8')}")
         else:
             out = stdout
-    except:
-        raise RuntimeError(f"File '{file}' not found")
+    except Exception as e:
+        raise e
     #print(out)
     cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = (
         np.frombuffer(out, np.int16)
