@@ -123,12 +123,9 @@ cdef class Whisper:
         if (type(filename) == np.ndarray) :
             print("Loading data from numpy array")
             temp = filename
-        elif (type(filename) == str) :
+        else:
             print("Loading data from file")
             temp = load_audio(filename)
-        else :
-            print("Loading data from default file")
-            temp = load_audio(TEST_FILE)
 
         
         cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = temp
