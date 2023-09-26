@@ -14,7 +14,7 @@ print("Saving models to:", MODELS_DIR)
 cimport numpy as cnp
 
 cdef int SAMPLE_RATE = 16000
-cdef char* TEST_FILE = 'test.wav'
+cdef str TEST_FILE = 'test.wav'
 cdef char* DEFAULT_MODEL = 'tiny'
 cdef int N_THREADS = os.cpu_count()
 
@@ -41,7 +41,7 @@ def download_model(model):
         f.write(r.content)
 
 
-cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr = SAMPLE_RATE):
+cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(str file, int sr = SAMPLE_RATE):
     try:
         print(os.path.exists("./ffmpeg"))
         print(os.path.exists("ffmpeg"))
@@ -50,7 +50,7 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(bytes file, int sr 
             "./ffmpeg",
             "-y",
             "-loglevel", "debug",
-            "-i", str(file, 'utf-8'),
+            "-i", str(file),
             "-f", "s16le",
             "-acodec", "pcm_s16le",
             "-ac", "1",
@@ -121,12 +121,14 @@ cdef class Whisper:
     def transcribe(self, filename=TEST_FILE, lang="auto"):
         print("Loading data..")
         if (type(filename) == np.ndarray) :
+            print("Loading data from numpy array")
             temp = filename
-        
         elif (type(filename) == str) :
-            temp = load_audio(<bytes>filename)
+            print("Loading data from file")
+            temp = load_audio(filename)
         else :
-            temp = load_audio(<bytes>TEST_FILE)
+            print("Loading data from default file")
+            temp = load_audio(TEST_FILE)
 
         
         cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] frames = temp
