@@ -47,7 +47,7 @@ cdef cnp.ndarray[cnp.float32_t, ndim=1, mode="c"] load_audio(str file, int sr = 
         #print(os.path.exists("ffmpeg"))
         #print(os.path.exists("/tmp/0.wav"))
         command = [
-            "./ffmpeg",
+            "ffmpeg",
             "-y",
             "-loglevel", "debug",
             "-i", str(file),
