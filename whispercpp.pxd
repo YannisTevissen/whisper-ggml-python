@@ -11,7 +11,7 @@ cdef nogil:
     int SAMPLE_RATE = 16000
     char* TEST_FILE = b'test.wav'
     char* DEFAULT_MODEL = b'ggml-tiny.bin'
-    char* LANGUAGE = b'fr'
+    char* LANGUAGE = b'en'
     ctypedef struct audio_data:
         float* frames;
         int n_frames;
