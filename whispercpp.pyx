@@ -135,7 +135,7 @@ cdef class Whisper:
 
         params = default_params(c_string)
 
-        print("Transcribing..")
+        print(f"Transcribing in {lang}..")
 
         return whisper_full(self.ctx, params, &frames[0], len(frames))
     
