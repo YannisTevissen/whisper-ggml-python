@@ -84,6 +84,7 @@ cdef whisper_full_params default_params(char* language) nogil:
     cdef whisper_full_params params = whisper_full_default_params(
         whisper_sampling_strategy.WHISPER_SAMPLING_GREEDY
     )
+    params.max_len = 1
     params.print_realtime = True
     params.print_progress = True
     params.translate = False
